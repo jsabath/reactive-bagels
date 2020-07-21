@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import BagelsContainer from './Components/BagelsContainer'
+import Form from './Components/Form'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    bagels: []
+  }
+
+  componentDidMount(){
+    fetch('http://bagel-api-fis.herokuapp.com/bagels')
+    .then(response => response.json())
+    .then(result => this.setState({bagels: result}))
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>This is our Bagels App</h1>
+        <Form />
+        <BagelsContainer bagels={this.state.bagels} />
+      </div>
+    )
+  }
+
 }
 
 export default App;
